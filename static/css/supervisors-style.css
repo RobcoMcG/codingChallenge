@@ -1,4 +1,4 @@
-body {
+body div{
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -7,8 +7,24 @@ body {
 
 div {
 	background-color: #f2f2f2;
-	width: 80%;
+	width: 100%;
 	padding: 10px;
 	margin-bottom: 5px;
 	border-radius: 2px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }

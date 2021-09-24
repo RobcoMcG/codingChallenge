@@ -3,12 +3,30 @@
 {% block head %}
 <title> Add Supervisor </title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+<script>
+	function alertBox() {
+		var fName = document.getElementById("firstName").value;
+		var lName = document.getElementById("lastName").value;
+		var email = document.getElementById("email").value;
+		var phone = document.getElementById("phoneNumber").value;
+		var supervisor = document.getElementById("supervisor").value;
+		
+		if ((fName != null && fName != "") && (lName != null && lName != "") && (supervisor != null && supervisor != "")) {
+			alert("Added \nName: " + fName + " " + lName + "\nEmail: " + email + "\nPhone: " + phone + "\nSupervisor: " + supervisor);
+		};		
+	}
+</script>
 {% endblock %}
 
 {% block body %}
 <h1>Add New Supervisor</h1>
 <hr>
 <br>
+<h1>
+	{% if error %}
+		<p style="color:red"><strong>Error:</strong> {{ error }}
+	{% endif %}
+</h1>
 <div>
 	<form action="http://localhost:5000/new_entry" method="POST">
 		<label for="firstName">First Name:</label>
@@ -21,6 +39,6 @@
 		<input type="text" id="phoneNumber" name="phoneNumber"><br><br>
 		<label for="supervisor">Supervisor: </label>
 		<input type="text" id="supervisor" name="supervisor" required><br><br>
-		<input type="submit" value="Submit">
+		<input type="submit" value="Submit" onclick="alertBox()">
 	</form>
 {% endblock %}

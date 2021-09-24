@@ -11,8 +11,6 @@ import json
 app = Flask(__name__)
 api = Api(app)
 
-#supervisors = []
-
 class Supervisor():
     def __init__(self, sID, sPhone, sJurisdiction, sIDN, sFirstName, sLastName):
         self.sID = sID if sID is not None else ""
@@ -26,18 +24,15 @@ def populateSupervisors(data):
     supervisors = []
     for item in data:
         if item['jurisdiction'].isdigit():
-            pass
-        #supervisors.items().__add__(Supervisor(item['id'], item['phone'], item['jurisdiction'], item['identificationNumber'], item['firstName'], item['lastName']))
+            pass        
         else:
             supervisors.append(Supervisor(item['id'], item['phone'], item['jurisdiction'], item['identificationNumber'], item['firstName'], item['lastName']))
-    print(supervisors)
     return supervisors
     
 def filterSupervisors(supervisors):
     for s in supervisors:
         if s.sJurisdiction.isdigit():
-            supervisors.remove(s)
-    
+            supervisors.remove(s)    
     supervisors = sorted(supervisors, key=lambda x: (x.sJurisdiction, x.sLastName, x.sFirstName))
     return supervisors
 
@@ -47,18 +42,11 @@ def validate(firstName, lastName, supervisor):
     else:
         return True
 
-#api.add_resource(Supervisor, "/supervisors")
-
 @app.route("/", methods={'GET', 'POST'})
 def index():
-    if (request.method == 'POST'):
-        userJSON = request.get_json()
-        return jsonify({'sent ' : userJSON}), 201
-    else:
-        return render_template('index.html')
-    #return render_template('index.html')
+    return render_template('index.html')
     
-@app.route("/new_entry", methods={'GET', 'POST"'})
+@app.route("/new_entry", methods={'GET', 'POST'})
 def new():
     if (request.method == 'POST'):
         firstName = request.form['firstName']
@@ -68,21 +56,38 @@ def new():
         supervisor = request.form['supervisor']
         valid = validate(firstName, lastName, supervisor)
         if (valid):
-            print(f'Entry {firstName} {lastName}, {email}, {phoneNumber}, {supervisor} added!')            
-            return redirect(url_for('index.html'))
+            print(f'Entry {firstName} {lastName}, {email}, {phoneNumber}, {supervisor} added!')
+            return redirect(url_for('index'))
         if (valid == False):
-            return "error"
-    return render_template('new_supervisor.html')
+            error = "Missing required field"
+            return render_template('new_supervisor', error=error)
+    else:
+        return render_template('new_supervisor.html')
 
-@app.route("/supervisors", methods={"GET"})
+@app.route("/supervisors", methods={'GET', 'POST'})
 def getSupervisorList():
     req = requests.get("https://o3m5qixdng.execute-api.us-east-1.amazonaws.com/api/managers")
     data = req.content
     json_data = json.loads(data)
     supervisors = populateSupervisors(json_data)
     supervisors = filterSupervisors(supervisors)
-    #return render_template('supervisors.html', data=json_data)
     return render_template('supervisors.html', data=supervisors)
+
+@app.route("/about", methods={"GET"})
+def about():
+    return render_template('about.html')
+
+@app.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
 
 if __name__ == "__main__":
     app.run(debug=True)

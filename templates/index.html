@@ -2,9 +2,12 @@
 
 {% block head %}
 <title> Home </title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 {% endblock %}
 
 {% block body %}
-<h1>Template</h1>
+<h1>LightFeather Coding Challenge Home</h1>
+<br>
+<h3> At the top is the navigation for accessing each page.</h3>
+<h4> Within that navigation, you will see <a href="/supervisors">View Supervisors</a> for the GET portion of the challenge.</h4>
+<h4> The POST part of the challenge will be under the <a href="/new_entry">Add Entry</a> section.</h4>
 {% endblock %}

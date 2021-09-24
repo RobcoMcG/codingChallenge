@@ -8,12 +8,13 @@
 	{% block head %}{% endblock %}
 </head>
 <body>
-	<ul>
-		<li><a href="/"> Home </a></li>
-		<li><a href="/supervisors"> View Supervisors </a></li>
-		<li><a href="/new_entry"> Add Entry </a></li>
-		<li><a href="/about"> About </a></li>
-	</ul>
-	{% block body %}{% endblock %}
+	<nav class="navigation">
+		<a href="/"> Home </a> | 
+		<a href="/supervisors"> View Supervisors </a> | 
+		<a href="/new_entry"> Add Entry </a> | 
+		<a href="/about"> About </a>
+	</nav>
+	{% block body %}
+	{% endblock %}
 </body>
 </html>
