@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title> Supervisors </title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/supervisors-style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block body %}
+<h1>List of Current Supervisors</h1>
+<hr>
+<div>
+	<!--{{ data }} -->
+	<span> Jurisdiction |&ensp;Last Name |&ensp; First Name <span>
+	{% for datas in data %}
+	<div style="display:block; border: 1px solid #ccc;">
+		<span>{{ datas.sJurisdiction }} &emsp;&emsp;-&emsp;&emsp; {{datas.sLastName }} ,&emsp;&emsp; {{datas.sFirstName}}</span>
+		
+	</div>
+	{% endfor %}
+</div>	
+{% endblock %}

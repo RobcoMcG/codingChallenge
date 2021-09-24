@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title> Add Supervisor </title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+{% endblock %}
+
+{% block body %}
+<h1>Add New Supervisor</h1>
+<hr>
+<br>
+<div>
+	<form action="http://localhost:5000/new_entry" method="POST">
+		<label for="firstName">First Name:</label>
+		<input type="text" id="firstName" name="firstName" required><br><br>
+		<label for="lastName">Last Name: </label>
+		<input type="text" id="lastName" name="lastName" required><br><br>
+		<label for="email">Email: </label>
+		<input type="text" id="email" name="email"><br><br>
+		<label for="phoneNumber">Phone Number: </label>
+		<input type="text" id="phoneNumber" name="phoneNumber"><br><br>
+		<label for="supervisor">Supervisor: </label>
+		<input type="text" id="supervisor" name="supervisor" required><br><br>
+		<input type="submit" value="Submit">
+	</form>
+{% endblock %}
